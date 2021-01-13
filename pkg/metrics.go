@@ -51,7 +51,7 @@ func NewIcapChecker(host, port, service string) *IcapChecker {
 		promReqmods:          prometheus.NewDesc("gw_rebuild_reqmods", "GW Rebuild REQMODS Number", []string{}, nil),
 		promRespmods:         prometheus.NewDesc("gw_rebuild_respmods", "GW Rebuild RESPMOD Number", []string{}, nil),
 		promOptions:          prometheus.NewDesc("gw_rebuild_options", "GW Rebuild OPTIONS Number", []string{}, nil),
-		promAllow204:         prometheus.NewDesc("gw_rebuild_allow204", "GW Rebuild ALLO204 Number", []string{}, nil),
+		promAllow204:         prometheus.NewDesc("gw_rebuild_allow204", "GW Rebuild ALLOW204 Number", []string{}, nil),
 		promRequestsScanned:  prometheus.NewDesc("gw_rebuild_requests_scanned", "GW Rebuild Requests Scanned Number", []string{}, nil),
 		promRebuildFailures:  prometheus.NewDesc("gw_rebuild_rebuild_failures", "GW Rebuild Rebuilt Failures Number", []string{}, nil),
 		promRebuildErrors:    prometheus.NewDesc("gw_rebuild_rebuild_errors", "GW Rebuild Rebuild Errors Number", []string{}, nil),
