@@ -69,15 +69,24 @@ func collectStatistics(host, port, service string) (res []byte, err error) {
 	}
 	defer conn.Close()
 
+	fmt.Println("Sending REQMOD request")
 	sendReqmod(hostPort, service, conn)
-	sendHTTPReq(conn)
+	fmt.Println("Sent REQMOD request")
 
+	fmt.Println("Sending HTTP request")
+	sendHTTPReq(conn)
+	fmt.Println("Sent HTTP request")
+
+	fmt.Println("Closing connection write")
 	err = conn.CloseWrite()
 	if err != nil {
 		return
 	}
+	fmt.Println("Closed connection write")
 
+	fmt.Println("Reading response from the connection")
 	res, err = ioutil.ReadAll(conn)
+	fmt.Println("Read response from the connection")
 
 	return
 }
