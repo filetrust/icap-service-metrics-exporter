@@ -79,7 +79,5 @@ func collectStatistics(host, port, service string) (res []byte, err error) {
 
 	res, err = ioutil.ReadAll(conn)
 
-	fmt.Println(string(res))
-
 	return
 }
