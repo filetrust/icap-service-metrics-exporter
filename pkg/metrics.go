@@ -1,6 +1,8 @@
 package icap
 
 import (
+	"fmt"
+
 	"github.com/prometheus/client_golang/prometheus"
 )
 
@@ -96,10 +98,17 @@ func (c *IcapChecker) Describe(ch chan<- *prometheus.Desc) {
 }
 
 func (c *IcapChecker) Collect(ch chan<- prometheus.Metric) {
+	fmt.Println("Collecting Statistics from ICAP Service")
 	res, err := collectStatistics(c.opts.Host, c.opts.Port, c.opts.Service)
+	fmt.Println("Collected statistics from ICAP Service")
 
+	fmt.Println("Parsing Server Statistics")
 	serverStats := parseRunningServerStatistics(res)
+	fmt.Println("Parsed Server Statistics")
+
+	fmt.Println("Parsing GW Rebuild Statistics")
 	rebuildStats := parseGWRebuildStatistics(res)
+	fmt.Println("Parsed GW Rebuild Statistics")
 
 	if err != nil {
 		return
