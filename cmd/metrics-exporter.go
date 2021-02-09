@@ -21,21 +21,6 @@ var (
 	metricPort = os.Getenv("METRICS_PORT")
 )
 
-func healthCheckHandler(w http.ResponseWriter, r *http.Request) {
-	alive, err := icap.CheckHealth(icapHost, icapPort)
-	if err != nil {
-		http.Error(w, "icap-service is not available", http.StatusServiceUnavailable)
-		return
-	}
-
-	if !alive {
-		http.Error(w, "icap-service is not available", http.StatusServiceUnavailable)
-		return
-	}
-
-	w.Write([]byte("icap-service is available"))
-}
-
 func run() error {
 	registry := prometheus.NewPedanticRegistry()
 
@@ -52,8 +37,6 @@ func run() error {
 	log.Println("listening on", listen.Addr())
 
 	http.Handle("/metrics", promhttp.HandlerFor(registry, promhttp.HandlerOpts{}))
-	http.HandleFunc("/health/live", healthCheckHandler)
-	http.HandleFunc("/health/readiness", healthCheckHandler)
 
 	srv := &http.Server{
 		ReadTimeout:  5 * time.Second,
