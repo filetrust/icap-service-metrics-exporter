@@ -61,8 +61,6 @@ var (
 	gwRebuildStatsBodyBytesInRegexp      = regexp.MustCompile(`Service gw_rebuild BODY BYTES IN : ([0-9]*) Kbs ([0-9]*) bytes`)
 	gwRebuildStatsBodyBytesOutRegexp     = regexp.MustCompile(`Service gw_rebuild BODY BYTES OUT : ([0-9]*) Kbs ([0-9]*) bytes`)
 	gwRebuildStatsBodyBytesScannedRegexp = regexp.MustCompile(`Service gw_rebuild BODY BYTES SCANNED : ([0-9]*) Kbs ([0-9]*) bytes`)
-
-	icapRespCodeRegexp = regexp.MustCompile(`ICAP/1\.0 (\d+)`)
 )
 
 func parseRunningServerStatistics(icapRes []byte) (stats RunningServerStatistics) {
@@ -179,16 +177,6 @@ func parseGWRebuildStatistics(icapRes []byte) (stats GWRebuildStatistics) {
 		kbs, _ := strconv.Atoi(string(bodyBytesScannedRegex[1])) //kbs
 		b, _ := strconv.Atoi(string(bodyBytesScannedRegex[2]))   // bytes
 		stats.bodyBytesScanned = (kbs * 1024) + b
-	}
-	return
-}
-
-func ParseIcapHeader(icapRes []byte) (code int) {
-	code = -1
-
-	c := icapRespCodeRegexp.FindSubmatch(icapRes)
-	if len(c) == 2 {
-		code, _ = strconv.Atoi(string(c[1]))
 	}
 	return
 }
